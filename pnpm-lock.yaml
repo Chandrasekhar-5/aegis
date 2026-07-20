@@ -58,6 +58,18 @@ importers:
 
   packages/utils: {}
 
+  plugins/runtime:
+    dependencies:
+      '@aegis/sdk':
+        specifier: workspace:*
+        version: link:../../packages/sdk
+      '@aegis/types':
+        specifier: workspace:*
+        version: link:../../packages/types
+      '@aegis/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
+
 packages:
 
   '@babel/runtime@7.29.7':

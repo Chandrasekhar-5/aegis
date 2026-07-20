@@ -31,11 +31,18 @@ export interface CheckContext {
 export interface CheckResult {
   success: boolean;
   message: string;
+  metadata: CheckMetadata;
+
   details?: string;
   suggestion?: string;
+
   duration: number;
-  metadata: CheckMetadata;
 }
 
-export type DiagnosticCheck =
-  (context: CheckContext) => Promise<CheckResult>;
+export interface Diagnostic {
+  metadata: CheckMetadata;
+
+  run(
+    context: CheckContext,
+  ): Promise<CheckResult>;
+}

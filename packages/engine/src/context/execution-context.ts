@@ -1,5 +1,6 @@
-export interface ExecutionContext {
-  cwd: string;
-  platform: NodeJS.Platform;
-  env: NodeJS.ProcessEnv;
+import type { CheckContext } from "@aegis/types";
+
+export interface ExecutionContext extends CheckContext {
+  nodeVersion: string;
+  timestamp: Date;
 }

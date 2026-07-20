@@ -1,4 +1,7 @@
-import type { CheckMetadata, DiagnosticCheck } from "./check";
+import type {
+  CheckMetadata,
+  Diagnostic,
+} from "./check";
 
 export interface PluginAuthor {
   name: string;
@@ -8,14 +11,19 @@ export interface PluginAuthor {
 
 export interface PluginManifest {
   apiVersion: number;
+
   name: string;
   version: string;
+
   description: string;
+
   author: PluginAuthor;
+
   checks: CheckMetadata[];
 }
 
 export interface Plugin {
   manifest: PluginManifest;
-  diagnostics: DiagnosticCheck[];
+
+  diagnostics: Diagnostic[];
 }

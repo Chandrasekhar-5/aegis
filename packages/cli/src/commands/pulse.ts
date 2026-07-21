@@ -2,6 +2,8 @@ import { Command } from "commander";
 
 import { Engine } from "@aegis/engine";
 import runtime from "@aegis/runtime";
+import { printError } from "../ui";
+
 import { formatPulseReport } from "../formatters";
 
 export function registerPulseCommand(
@@ -10,13 +12,26 @@ export function registerPulseCommand(
   program
     .command("pulse")
     .description("Run project diagnostics")
-    .action(async () => {
-      const engine = new Engine();
+    .option("--json", "Output report as JSON")
+    .action(async (options: { json?: boolean }) => {
+      try {
+        const engine = new Engine();
 
-      engine.use(runtime);
+        engine.use(runtime);
 
-      const report = await engine.pulse();
+        const report = await engine.pulse();
 
-      formatPulseReport(report);
+        if (options.json) {
+          console.log(
+            JSON.stringify(report, null, 2),
+          );
+          return;
+        }
+
+        formatPulseReport(report);
+      } catch (error) {
+        printError(error);
+        process.exit(1);
+      }
     });
 }

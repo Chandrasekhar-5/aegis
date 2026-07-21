@@ -2,6 +2,8 @@ import { Command } from "commander";
 
 import { Engine } from "@aegis/engine";
 import runtime from "@aegis/runtime";
+import { printError } from "../ui";
+
 import { formatDoctorReport } from "../formatters";
 
 export function registerDoctorCommand(
@@ -10,13 +12,26 @@ export function registerDoctorCommand(
   program
     .command("doctor")
     .description("Run environment diagnostics")
-    .action(async () => {
-      const engine = new Engine();
+    .option("--json", "Output report as JSON")
+    .action(async (options: { json?: boolean }) => {
+      try {
+        const engine = new Engine();
 
-      engine.use(runtime);
+        engine.use(runtime);
 
-      const report = await engine.doctor();
+        const report = await engine.doctor();
 
-      formatDoctorReport(report);
+        if (options.json) {
+          console.log(
+            JSON.stringify(report, null, 2),
+          );
+          return;
+        }
+
+        formatDoctorReport(report);
+      } catch (error) {
+        printError(error);
+        process.exit(1);
+      }
     });
 }

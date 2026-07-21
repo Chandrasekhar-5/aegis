@@ -1,0 +1,19 @@
+{
+  "name": "@aegis/repository",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "dependencies": {
+    "@aegis/sdk": "workspace:*",
+    "@aegis/utils": "workspace:*",
+    "@aegis/types": "workspace:*"
+  }
+}

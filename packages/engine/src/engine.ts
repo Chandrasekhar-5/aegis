@@ -2,7 +2,8 @@ import type { Plugin } from "@aegis/types";
 
 import { ContextBuilder } from "./context";
 import { PluginLoader } from "./loader";
-import { ReportBuilder, type DoctorReport } from "./reporter";
+import type { Report } from "@aegis/types";
+import { ReportBuilder } from "./reporter";
 import { DiagnosticRunner } from "./runner";
 
 export class Engine {
@@ -19,7 +20,7 @@ export class Engine {
     return this;
   }
 
-  async doctor(): Promise<DoctorReport> {
+  async doctor(): Promise<Report> {
     const started = performance.now();
 
     const context = this.contextBuilder.build();
@@ -41,7 +42,7 @@ export class Engine {
     );
   }
 
-  async pulse(): Promise<DoctorReport> {
+  async pulse(): Promise<Report> {
     return this.doctor();
   }
 }

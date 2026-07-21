@@ -1,22 +1,20 @@
-import type { CheckResult } from "@aegis/types";
-
-export interface ReportSummary {
-  total: number;
-  passed: number;
-  failed: number;
-}
-
-export interface DoctorReport {
-  generatedAt: Date;
-  duration: number;
-  results: CheckResult[];
-  summary: ReportSummary;
-}
+import type {
+  CheckResult,
+  Report,
+  ReportSummary,
+} from "@aegis/types";
 
 export class ReportBuilder {
-  build(results: CheckResult[], duration: number): DoctorReport {
+  build(results: CheckResult[], duration: number): Report {
     const passed = results.filter((r) => r.success).length;
-    const failed = results.length - passed;
+
+const warnings = results.filter(
+  (r) => !r.success && r.metadata.severity === "warning",
+).length;
+
+const errors = results.filter(
+  (r) => !r.success && r.metadata.severity === "error",
+).length;
 
     return {
       generatedAt: new Date(),
@@ -25,7 +23,8 @@ export class ReportBuilder {
       summary: {
         total: results.length,
         passed,
-        failed,
+        warnings,
+        errors,
       },
     };
   }

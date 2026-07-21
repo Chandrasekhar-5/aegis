@@ -2,6 +2,7 @@ import { Command } from "commander";
 
 import { Engine } from "@aegis/engine";
 import runtime from "@aegis/runtime";
+import { formatDoctorReport } from "../formatters";
 
 export function registerDoctorCommand(
   program: Command,
@@ -16,6 +17,6 @@ export function registerDoctorCommand(
 
       const report = await engine.doctor();
 
-      console.log(report);
+      formatDoctorReport(report);
     });
 }

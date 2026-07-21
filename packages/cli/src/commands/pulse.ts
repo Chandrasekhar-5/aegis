@@ -2,6 +2,7 @@ import { Command } from "commander";
 
 import { Engine } from "@aegis/engine";
 import runtime from "@aegis/runtime";
+import { formatPulseReport } from "../formatters";
 
 export function registerPulseCommand(
   program: Command,
@@ -16,6 +17,6 @@ export function registerPulseCommand(
 
       const report = await engine.pulse();
 
-      console.log(report);
+      formatPulseReport(report);
     });
 }
